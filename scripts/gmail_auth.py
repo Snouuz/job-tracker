@@ -2,12 +2,12 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import os
-import json
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.compose"]
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CREDENTIALS_PATH = os.path.join(BASE_DIR, "credentials.json")
 TOKEN_PATH = os.path.join(BASE_DIR, "token.json")
+
 
 def get_gmail_service():
     creds = None
@@ -28,7 +28,8 @@ def get_gmail_service():
     from googleapiclient.discovery import build
     return build("gmail", "v1", credentials=creds)
 
+
 if __name__ == "__main__":
-    print("🔐 Authentification Gmail...")
+    print("Authentification Gmail...")
     service = get_gmail_service()
-    print("✅ Authentification réussie ! Token sauvegardé.")
+    print("Authentification réussie ! Token sauvegardé.")

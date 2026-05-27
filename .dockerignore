@@ -1,0 +1,16 @@
+# Secrets — jamais dans l'image
+credentials.json
+token.json
+.env
+
+# Données réelles — montées en volume
+data/candidatures.csv
+
+# Git
+.git/
+.gitignore
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo

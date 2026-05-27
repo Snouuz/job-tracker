@@ -1,0 +1,12 @@
+services:
+  job-tracker:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+      # Gmail (optionnel) — décommenter si credentials.json existe :
+      # - ./credentials.json:/app/credentials.json:ro
+      # - ./token.json:/app/token.json:ro
+    environment:
+      FLASK_APP: app.py

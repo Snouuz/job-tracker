@@ -1,9 +1,7 @@
-
 from flask import Flask, render_template, request, redirect, url_for
 import csv
 import os
 from datetime import datetime, date, timedelta
-from jinja2 import Environment, FileSystemLoader
 from scripts.gmail_draft import creer_brouillon
 
 app = Flask(__name__, template_folder="dashboard")
@@ -11,16 +9,19 @@ app = Flask(__name__, template_folder="dashboard")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = os.path.join(BASE_DIR, "data", "candidatures.csv")
 
+
 # ─── Helpers ───────────────────────────────────────────────
 
 def lire_candidatures():
     with open(CSV_PATH, "r", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
+
 def get_next_id(candidatures):
     if not candidatures:
         return 1
     return max(int(c["id"]) for c in candidatures) + 1
+
 
 def calculer_stats(candidatures):
     total = len(candidatures)
@@ -29,6 +30,7 @@ def calculer_stats(candidatures):
     en_attente = sum(1 for c in candidatures if c["statut"] in ["envoyée", "relance_1", "relance_2"])
     taux = round(((entretiens + refus) / total * 100)) if total > 0 else 0
     return {"total": total, "entretiens": entretiens, "refus": refus, "en_attente": en_attente, "taux_reponse": taux}
+
 
 def calculer_relances(candidatures):
     aujourd_hui = date.today()
@@ -51,6 +53,7 @@ def calculer_relances(candidatures):
 
     return relances
 
+
 # ─── Routes ────────────────────────────────────────────────
 
 @app.route("/")
@@ -63,6 +66,7 @@ def index():
         relances=calculer_relances(candidatures),
         date_generation=datetime.now().strftime("%d/%m/%Y à %Hh%M"),
     )
+
 
 @app.route("/ajouter", methods=["POST"])
 def ajouter():
@@ -97,6 +101,7 @@ def ajouter():
 
     return redirect(url_for("index"))
 
+
 @app.route("/relance/<int:cid>/<int:num>")
 def marquer_relance(cid, num):
     candidatures = lire_candidatures()
@@ -117,6 +122,7 @@ def marquer_relance(cid, num):
 
     return redirect(url_for("index"))
 
+
 @app.route("/supprimer/<int:cid>")
 def supprimer(cid):
     candidatures = lire_candidatures()
@@ -130,11 +136,14 @@ def supprimer(cid):
         else:
             # Si plus aucune candidature, on remet juste l'en-tête
             writer = csv.writer(f)
-            writer.writerow(["id","entreprise","poste","date_candidature","canal","statut",
-                             "email_contact","lien","notes","date_relance_1","date_relance_2",
-                             "relance_1_faite","relance_2_faite"])
+            writer.writerow([
+                "id", "entreprise", "poste", "date_candidature", "canal", "statut",
+                "email_contact", "lien", "notes", "date_relance_1", "date_relance_2",
+                "relance_1_faite", "relance_2_faite"
+            ])
 
     return redirect(url_for("index"))
+
 
 @app.route("/statut/<int:cid>", methods=["POST"])
 def modifier_statut(cid):
@@ -149,6 +158,7 @@ def modifier_statut(cid):
         writer.writerows(candidatures)
 
     return redirect(url_for("index"))
+
 
 @app.route("/brouillon/<int:cid>/<int:num>")
 def creer_brouillon_route(cid, num):
@@ -167,5 +177,7 @@ def creer_brouillon_route(cid, num):
 
     return redirect(url_for("index"))
 
+
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    debug = os.environ.get("FLASK_DEBUG", "false").lower() == "true"
+    app.run(debug=debug, host="0.0.0.0", port=5000)

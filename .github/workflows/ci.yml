@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Run flake8
+        run: flake8 app.py scripts/ --max-line-length=120
+
+  docker:
+    name: Build & Scan
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t job-tracker:${{ github.sha }} .
+
+      - name: Scan vulnerabilities avec Trivy
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: job-tracker:${{ github.sha }}
+          format: table
+          exit-code: 1
+          severity: CRITICAL,HIGH
