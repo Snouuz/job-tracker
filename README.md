@@ -33,8 +33,16 @@ cp data/candidatures.example.csv data/candidatures.csv
 
 ## Utilisation
 
+**Windows :**
 ```bat
-run.bat    # Démarre le serveur sur http://localhost:5000
+run.bat
 ```
 
-Pour arrêter le serveur, ferme simplement la fenêtre console Flask.
+**Linux :**
+```bash
+./run.sh
+```
+
+Les deux scripts démarrent le serveur sur http://localhost:5000 et ouvrent le navigateur automatiquement.
+
+Pour arrêter le serveur, fais `Ctrl+C` dans le terminal (Linux) ou ferme la fenêtre console Flask (Windows).
