@@ -1,5 +1,1 @@
 id,entreprise,poste,date_candidature,canal,statut,email_contact,lien,notes,date_relance_1,date_relance_2,relance_1_faite,relance_2_faite
-1,Acme Corp,DevOps Engineer,2026-05-10,email,refus,recrutement@acme-corp.fr,https://acme-corp.fr/jobs/devops,,2026-05-12,2026-05-15,False,False
-2,Initech,DevSecOps,2026-05-15,linkedin,entretien,hr@initech.fr,https://linkedin.com/jobs/initech-devsecops,,2026-05-17,2026-05-20,True,True
-3,Umbrella Tech,Ingénieur Cloud,2026-05-20,jobboard,relance_1,,https://jobboard.fr/umbrella-cloud,,2026-05-22,2026-05-25,True,False
-4,Globex,SRE,2026-05-25,email,envoyée,jobs@globex.fr,,,2026-05-27,2026-05-30,False,False
