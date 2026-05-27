@@ -1,0 +1,421 @@
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: #fff;
+    }
+
+    .subtitle {
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: #1e2130;
+      border: 1px solid #2d3148;
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+
+    .stat-card .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #6366f1;
+    }
+
+    .stat-card .label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-top: 0.3rem;
+    }
+
+    /* RELANCES */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .relances {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .relance-card {
+      background: #1e2130;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .relance-card .info strong { color: #fff; }
+    .relance-card .info span { color: #94a3b8; font-size: 0.85rem; }
+    
+    .badge-relance {
+      background: #f59e0b22;
+      color: #f59e0b;
+      border: 1px solid #f59e0b55;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .no-relance {
+      color: #4ade80;
+      font-size: 0.95rem;
+      padding: 0.8rem;
+      background: #4ade8011;
+      border: 1px solid #4ade8033;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    /* TABLEAU */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid #2d3148;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    thead {
+      background: #1e2130;
+    }
+
+    thead th {
+      padding: 0.9rem 1rem;
+      text-align: left;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    tbody tr {
+      border-top: 1px solid #2d3148;
+      transition: background 0.15s;
+    }
+
+    tbody tr:hover { background: #1e2130; }
+
+    tbody td {
+      padding: 0.85rem 1rem;
+      color: #cbd5e1;
+    }
+
+    tbody td:first-child { color: #fff; font-weight: 500; }
+
+    /* BADGES STATUT */
+    .badge {
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+
+    .badge-envoyee   { background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f655; }
+    .badge-relance1  { background: #f59e0b22; color: #f59e0b; border: 1px solid #f59e0b55; }
+    .badge-relance2  { background: #f9731622; color: #f97316; border: 1px solid #f9731655; }
+    .badge-entretien { background: #a855f722; color: #a855f7; border: 1px solid #a855f755; }
+    .badge-refus     { background: #ef444422; color: #ef4444; border: 1px solid #ef444455; }
+    .badge-acceptee  { background: #4ade8022; color: #4ade80; border: 1px solid #4ade8055; }
+
+    /* CANAL */
+    .canal { color: #64748b; font-size: 0.82rem; }
+
+    .updated {
+      text-align: right;
+      color: #334155;
+      font-size: 0.78rem;
+      margin-top: 2rem;
+    }
+    /* FORMULAIRE */
+.form-card {
+  background: #1e2130;
+  border: 1px solid #2d3148;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  background: #0f1117;
+  border: 1px solid #2d3148;
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  color: #e2e8f0;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #6366f1;
+}
+
+.form-group select option {
+  background: #1e2130;
+}
+
+form button[type="submit"] {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+form button[type="submit"]:hover {
+  background: #4f46e5;
+}
+
+.btn-supprimer {
+  color: #ef4444;
+  font-size: 1rem;
+  text-decoration: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.btn-supprimer:hover {
+  background: #ef444422;
+}
+
+.select-statut {
+  background: #0f1117;
+  border: 1px solid #2d3148;
+  border-radius: 6px;
+  padding: 0.3rem 0.5rem;
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.select-statut:focus {
+  border-color: #6366f1;
+}
+
+.btn-relance-todo {
+  display: inline-block;
+  background: #ef444422;
+  color: #ef4444;
+  border: 1px solid #ef444455;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.78rem;
+  text-decoration: none;
+  margin-right: 0.3rem;
+  transition: background 0.2s;
+}
+
+.btn-relance-todo:hover {
+  background: #ef444444;
+}
+
+.btn-relance-done {
+  display: inline-block;
+  background: #4ade8022;
+  color: #4ade80;
+  border: 1px solid #4ade8055;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.78rem;
+  text-decoration: none;
+  margin-right: 0.3rem;
+  transition: background 0.2s;
+}
+
+.btn-relance-done:hover {
+  background: #4ade8044;
+}
+
+.btn-draft {
+  display: inline-block;
+  background: #6366f122;
+  color: #6366f1;
+  border: 1px solid #6366f155;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.78rem;
+  text-decoration: none;
+  margin-right: 0.3rem;
+  transition: background 0.2s;
+}
+
+.btn-draft:hover {
+  background: #6366f144;
+}
+.btn-lien {
+  display: inline-block;
+  background: #6366f122;
+  color: #6366f1;
+  border: 1px solid #6366f155;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.78rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-lien:hover {
+  background: #6366f144;
+}
+
+/* ─── RESPONSIVE MOBILE ─────────────────────────── */
+@media (max-width: 768px) {
+
+  body {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  /* Stats : 2 colonnes sur mobile */
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Formulaire : 1 colonne */
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  form button[type="submit"] {
+    width: 100%;
+    padding: 0.9rem;
+  }
+
+  /* Tableau → Cards */
+  .table-wrapper {
+    border: none;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  table, tbody, tr, td {
+    display: block;
+    width: 100%;
+  }
+
+  tbody tr {
+    background: #1e2130;
+    border: 1px solid #2d3148;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+
+  tbody tr:hover {
+    background: #1e2130;
+  }
+
+  tbody td {
+    padding: 0.4rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    font-size: 0.85rem;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    margin-right: 1rem;
+  }
+
+  /* Boutons plus grands pour tactile */
+  .btn-relance-todo,
+  .btn-relance-done,
+  .btn-draft,
+  .btn-lien,
+  .btn-supprimer {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  /* Relances cards */
+  .relance-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  /* Select statut */
+  .select-statut {
+    width: 100%;
+    padding: 0.5rem;
+  }
+}

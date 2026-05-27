@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <h1>🎯 Job Tracker</h1>
+  <p class="subtitle">Mis à jour le {{ date_generation }}</p>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="number">{{ stats.total }}</div>
+      <div class="label">Candidatures</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">{{ stats.entretiens }}</div>
+      <div class="label">Entretiens</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">{{ stats.en_attente }}</div>
+      <div class="label">En attente</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">{{ stats.refus }}</div>
+      <div class="label">Refus</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">{{ stats.taux_reponse }}%</div>
+      <div class="label">Taux de réponse</div>
+    </div>
+  </div>
+
+  <!-- RELANCES DU JOUR -->
+  <div class="section-title">🚨 Relances à faire aujourd'hui</div>
+  <div class="relances">
+    {% if relances %}
+      {% for r in relances %}
+      <div class="relance-card">
+        <div class="info">
+          <strong>{{ r.entreprise }}</strong> — {{ r.poste }}<br>
+          <span>{{ r.canal }} · Candidature le {{ r.date_candidature }}</span>
+        </div>
+        <span class="badge-relance">{{ r.type_relance }}</span>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="no-relance">✅ Aucune relance à faire aujourd'hui !</div>
+    {% endif %}
+  </div>
+
+  <!-- FORMULAIRE -->
+<div class="section-title">➕ Nouvelle candidature</div>
+<form action="/ajouter" method="POST" class="form-card">
+  <div class="form-grid">
+    <div class="form-group">
+      <label>🏢 Entreprise *</label>
+      <input type="text" name="entreprise" required placeholder="OVHcloud">
+    </div>
+    <div class="form-group">
+      <label>💼 Poste *</label>
+      <input type="text" name="poste" required placeholder="Alternance DevOps">
+    </div>
+    <div class="form-group">
+      <label>📡 Canal *</label>
+      <select name="canal" required>
+        <option value="">-- Choisir --</option>
+        <option value="email">Email</option>
+        <option value="linkedin">LinkedIn</option>
+        <option value="jobboard">Job Board</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>📧 Email contact</label>
+      <input type="email" name="email_contact" placeholder="recruteur@entreprise.com">
+    </div>
+    <div class="form-group">
+      <label>🔗 Lien de l'offre</label>
+      <input type="url" name="lien" placeholder="https://...">
+    </div>
+    <div class="form-group">
+      <label>📝 Notes</label>
+      <input type="text" name="notes" placeholder="Remarques...">
+    </div>
+  </div>
+  <button type="submit">➕ Ajouter la candidature</button>
+</form>
+
+  <!-- TABLEAU -->
+  <div class="section-title">📋 Toutes les candidatures</div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Entreprise</th>
+          <th>Poste</th>
+          <th>Date</th>
+          <th>Canal</th>
+          <th>Statut</th>
+          <th>Relances</th>
+          <th>Notes</th>
+          <th>Email</th>
+          <th>Offre</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in candidatures %}
+        <tr>
+          <td data-label="#">{{ c.id }}</td>
+          <td data-label="Entreprise">{{ c.entreprise }}</td>
+          <td data-label="Poste">{{ c.poste }}</td>
+          <td data-label="Date">{{ c.date_candidature }}</td>
+          <td data-label="Canal" class="canal">{{ c.canal }}</td>
+          <td data-label="Statut">
+  <form action="/statut/{{ c.id }}" method="POST" style="display:inline">
+    <select name="statut" onchange="this.form.submit()" class="select-statut">
+      {% for s in ["envoyée","relance_1","relance_2","entretien","refus","acceptée"] %}
+        <option value="{{ s }}" {{ "selected" if c.statut == s }}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </form>
+        </td>
+        <td data-label="Relances">
+      <a href="/relance/{{ c.id }}/1"
+         class="{{ 'btn-relance-done' if c.relance_1_faite == 'True' else 'btn-relance-todo' }}">
+         J+2
+      </a>
+      {% if c.email_contact %}
+      <a href="/brouillon/{{ c.id }}/1" class="btn-draft" title="Créer brouillon Gmail">✉️</a>
+      {% endif %}
+      <a href="/relance/{{ c.id }}/2"
+         class="{{ 'btn-relance-done' if c.relance_2_faite == 'True' else 'btn-relance-todo' }}">
+         J+5
+      </a>
+      {% if c.email_contact %}
+      <a href="/brouillon/{{ c.id }}/2" class="btn-draft" title="Créer brouillon Gmail">✉️</a>
+      {% endif %}
+    </td>
+    <td data-label="Notes">{{ c.notes or "—" }}</td>
+    <td data-label="Email">{{ c.email_contact or "—" }}</td>
+    <td data-label="Offre">
+      {% if c.lien %}
+        <a href="{{ c.lien }}" target="_blank" class="btn-lien">🔗 Voir</a>
+      {% else %}
+        —
+      {% endif %}
+    </td>
+        <td data-label="Action">
+          <a href="/supprimer/{{ c.id }}"
+             onclick="return confirm('Supprimer {{ c.entreprise }} ?')"
+             class="btn-supprimer">🗑️</a>
+        </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+</body>
+</html>

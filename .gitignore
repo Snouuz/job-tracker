@@ -1,0 +1,8 @@
+credentials.json
+token.json
+
+data/candidatures.csv
+
+__pycache__/
+*.pyc
+*.pyo
